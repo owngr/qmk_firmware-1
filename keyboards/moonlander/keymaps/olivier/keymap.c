@@ -77,10 +77,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const key_override_t three_dot_override = ko_make_basic(MOD_MASK_SA, BP_DOT, BP_ELLP);
 const key_override_t middle_dot_override = ko_make_with_layers_and_negmods(MOD_MASK_ALT, BP_DOT, BP_MDDT, ~0, MOD_MASK_SHIFT);
 
+// remove insecable space
+const key_override_t non_breaking_space_override = ko_make_basic(MOD_MASK_SHIFT, KC_SPACE, KC_SPACE);
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
 	&middle_dot_override,
   &three_dot_override,
+  &non_breaking_space_override,
 	NULL // Null terminate the array of overrides!
 };
 
