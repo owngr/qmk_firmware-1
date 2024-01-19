@@ -53,14 +53,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,         BP_B,           BP_EACU,        BP_P,           BP_O,           BP_EGRV,        KC_INSERT,                                      KC_PGUP,        BP_DCIR,        BP_V,           BP_D,           BP_L,           BP_J,           BP_Z,           
     KC_ESCAPE,      BP_A,           BP_U,           BP_I,           BP_E,           BP_COMM,        KC_DELETE,                                      KC_PGDN,        BP_C,           BP_T,           BP_S,           BP_R,           BP_N,           BP_M,           
     KC_LSFT,        BP_AGRV,        BP_Y,           BP_X,           BP_DOT,         BP_K,                                                                           BP_QUOT,        BP_Q,           BP_G,           BP_H,           BP_F,           BP_W,           
-    KC_LCTL,        TT(1),          TT(2),          KC_HOME,        KC_END,         MT(MOD_LGUI, KC_ESCAPE),                                                        KC_ENTER,       KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       BP_CCED,
-                                                    KC_LSFT,        BP_UNDS,        KC_LALT,                                                        MT(MOD_RALT, KC_APPLICATION)   ,KC_BSPC,        KC_SPACE
+    KC_LCTL,        TT(1),          TT(2),          KC_HOME,        KC_END,         KC_LGUI,                                                                        KC_ENTER,       KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       BP_CCED,
+                                                    KC_LSFT,        BP_UNDS,        KC_LALT,                                                                        KC_RALT,       KC_BSPC,        KC_SPACE
   ),
   [1] = LAYOUT_moonlander(
     KC_ESCAPE,      KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_AUDIO_MUTE,                                  KC_F6,          KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         KC_F12,         
     KC_MS_WH_LEFT,  KC_MS_UP,       KC_MS_WH_RIGHT, KC_MS_WH_UP,    KC_PC_COPY,     KC_PC_PASTE,    KC_AUDIO_VOL_DOWN,                              KC_HOME,        KC_UP,          KC_END,         KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_KP_SLASH,    
     KC_CAPS,        KC_MS_DOWN,     KC_MS_RIGHT,    KC_MS_WH_DOWN,  KC_WWW_FAVORITES,KC_CALCULATOR, KC_AUDIO_VOL_UP,                                KC_LEFT,        KC_DOWN,        KC_RIGHT,       KC_KP_4,        KC_KP_5,        KC_KP_6,        KC_KP_ASTERISK, 
-    _______,        _______,        _______,        KC_SCROLL_LOCK, KC_MAIL,        KC_WWW_SEARCH,                                  TG(2),          KC_PGUP,        KC_KP_1,        KC_KP_2,        KC_KP_3,        KC_KP_MINUS,    
+    _______,        _______,        _______,        KC_SCROLL_LOCK, KC_MAIL,        KC_F13,                                                         TG(2),          KC_PGUP,        KC_KP_1,        KC_KP_2,        KC_KP_3,        KC_KP_MINUS,    
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_MEDIA_PLAY_PAUSE,KC_MEDIA_NEXT_TRACK,MT(MOD_LGUI, KC_ESCAPE),                                OSM(MOD_RCTL),  KC_PGDN,        KC_KP_0,        KC_KP_DOT,      KC_KP_EQUAL,    KC_KP_PLUS,     
                                                     OSM(MOD_LCTL),  OSM(MOD_RALT),  OSM(MOD_LSFT),                                                  MT(MOD_RGUI, KC_APPLICATION),OSM(MOD_RALT),  OSM(MOD_RSFT)
   ),
@@ -79,11 +79,14 @@ const key_override_t middle_dot_override = ko_make_with_layers_and_negmods(MOD_M
 
 // remove insecable space
 const key_override_t non_breaking_space_override = ko_make_basic(MOD_MASK_SHIFT, KC_SPACE, KC_SPACE);
+// keep it for slack mute
+const key_override_t breaking_space_override = ko_make_basic(MOD_MASK_CS, KC_SPACE, KC_SPACE);
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
 	&middle_dot_override,
   &three_dot_override,
   &non_breaking_space_override,
+  &breaking_space_override,
 	NULL // Null terminate the array of overrides!
 };
 
