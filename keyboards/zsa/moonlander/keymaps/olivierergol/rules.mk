@@ -5,4 +5,4 @@ KEY_OVERRIDE_ENABLE = yes
 # UNICODE_ENABLE        = yes
 # UNICODEMAP_ENABLE     = no
 # AUTOCORRECTION_ENABLE = yes
-# CAPS_WORD_ENABLE      = yes
+# CAPS_WORD_ENABLE      = yes⏎ 
