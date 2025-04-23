@@ -89,8 +89,8 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
     'L', 'L',        'L',        'L',        'L',         'L',        'L',                                        'R',        'R',        'R',        'R',        'R',        'R',        'R',
     'L', 'L',        'L',        'L',        'L',         'L',        'L',                                        'R',        'R',        'R',        'R',        'R',        'R',        'R',
     'L', 'L',        'L',        'L',        'L',         'L',                                                                'R',        'R',        'R',        'R',        'R',        'R',
-    'L', 'L',        'L',        'L',        'L',         'L',                                                                'R',        'R',        'R',        'R',        'R',        'R',
-                                 'L',        'L',         'L',                                                                'R',        'R',        'R'
+    'L', 'L',        'L',        'L',        'L',         '*',                                                                '*',        'R',        'R',        'R',        'R',        'R',
+                                 '*',        '*',         '*',                                                                '*',        '*',        '*'
     );
 // disable some key
 bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
