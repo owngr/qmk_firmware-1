@@ -92,7 +92,22 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
     'L', 'L',        'L',        'L',        'L',         'L',                                                                'R',        'R',        'R',        'R',        'R',        'R',
                                  'L',        'L',         'L',                                                                'R',        'R',        'R'
     );
-
+// disable some key
+bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
+                      uint16_t other_keycode, keyrecord_t* other_record) {
+    // Exceptionally allow some one-handed chords for hotkeys.
+    switch (tap_hold_keycode) {
+        case LCTL_T(EG_E):
+            if (other_keycode == EG_C || other_keycode == EG_V) {
+                return true;
+            } else if (other_keycode == LALT_T(EG_N)) {
+                return false;
+            }
+            break;
+    }
+    // Otherwise defer to the opposite hands rule.
+    return get_chordal_hold_default(tap_hold_record, other_record);
+}
 // remove insecable space
 const key_override_t non_breaking_space_override = ko_make_basic(MOD_MASK_SHIFT, KC_SPACE, KC_SPACE);
 // keep it for slack mute

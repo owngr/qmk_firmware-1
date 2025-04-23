@@ -21,3 +21,6 @@
 #define ORYX_CONFIGURATOR
 #define TAPPING_TERM 300
 #define PERMISSIVE_HOLD false
+#define HOLD_ON_OTHER_KEY_PRESS false
+#define CHORDAL_HOLD true
+
