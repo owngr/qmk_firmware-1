@@ -21,7 +21,6 @@
 #define ORYX_CONFIGURATOR
 #define TAPPING_TERM 300
 // allow to obtain the hold before the tapping term
-#define PERMISSIVE_HOLD true
-#define HOLD_ON_OTHER_KEY_PRESS false
-#define CHORDAL_HOLD true
+#define PERMISSIVE_HOLD
+#define CHORDAL_HOLD
 

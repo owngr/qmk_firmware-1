@@ -98,16 +98,24 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
     // Exceptionally allow some one-handed chords for hotkeys.
     switch (tap_hold_keycode) {
         case LCTL_T(EG_E):
-            if (other_keycode == EG_C || other_keycode == EG_V) {
-                return true;
-            } else if (other_keycode == LALT_T(EG_N)) {
+            // do not trigghold when roll typing
+            if (other_keycode == LALT_T(EG_N)) {
                 return false;
+                break;
+            } else if (other_keycode == EG_C || other_keycode == EG_V) {
+                return true;
+                break;
             }
+        // allow thumb keys
+        case LSFT(KC_ESC):
+        case ALGR_T(KC_ENTER):
+            return true;
             break;
     }
     // Otherwise defer to the opposite hands rule.
     return get_chordal_hold_default(tap_hold_record, other_record);
 }
+
 // remove insecable space
 const key_override_t non_breaking_space_override = ko_make_basic(MOD_MASK_SHIFT, KC_SPACE, KC_SPACE);
 // keep it for slack mute
@@ -144,21 +152,132 @@ void set_layer_color(int layer) {
   }
 }
 
+void set_left_hand_color(int r, int g, int b) {
+    // top left
+    rgb_matrix_set_color(6, r, g, b);
+    rgb_matrix_set_color(7, r, g, b);
+    rgb_matrix_set_color(8, r, g, b);
+
+    rgb_matrix_set_color(11, r, g, b);
+    rgb_matrix_set_color(12, r, g, b);
+    rgb_matrix_set_color(13, r, g, b);
+
+    rgb_matrix_set_color(16, r, g, b);
+    rgb_matrix_set_color(17, r, g, b);
+    rgb_matrix_set_color(18, r, g, b);
+
+    rgb_matrix_set_color(21, r, g, b);
+    rgb_matrix_set_color(22, r, g, b);
+    rgb_matrix_set_color(23, r, g, b);
+
+    rgb_matrix_set_color(26, r, g, b);
+    rgb_matrix_set_color(27, r, g, b);
+    rgb_matrix_set_color(28, r, g, b);
+
+}
+
+void set_right_hand_color(int r, int g, int b) {
+    // top right
+    rgb_matrix_set_color(42, r, g, b);
+    rgb_matrix_set_color(43, r, g, b);
+    rgb_matrix_set_color(44, r, g, b);
+
+    rgb_matrix_set_color(47, r, g, b);
+    rgb_matrix_set_color(48, r, g, b);
+    rgb_matrix_set_color(49, r, g, b);
+
+    rgb_matrix_set_color(52, r, g, b);
+    rgb_matrix_set_color(53, r, g, b);
+    rgb_matrix_set_color(54, r, g, b);
+
+    rgb_matrix_set_color(57, r, g, b);
+    rgb_matrix_set_color(58, r, g, b);
+    rgb_matrix_set_color(59, r, g, b);
+
+    rgb_matrix_set_color(62, r, g, b);
+    rgb_matrix_set_color(63, r, g, b);
+    rgb_matrix_set_color(64, r, g, b);
+
+}
+
+void set_functions_keys(int r, int g, int b) {
+    // top left
+    rgb_matrix_set_color(6, r, g, b);
+    rgb_matrix_set_color(7, r, g, b);
+    rgb_matrix_set_color(8, r, g, b);
+
+    rgb_matrix_set_color(11, r, g, b);
+    rgb_matrix_set_color(12, r, g, b);
+    rgb_matrix_set_color(13, r, g, b);
+
+    rgb_matrix_set_color(16, r, g, b);
+    rgb_matrix_set_color(17, r, g, b);
+    rgb_matrix_set_color(18, r, g, b);
+
+    rgb_matrix_set_color(21, r, g, b);
+    rgb_matrix_set_color(22, r, g, b);
+    rgb_matrix_set_color(23, r, g, b);
+
+}
+
+void set_thumb_keys(int r, int g, int b) {
+    // left thumb
+    rgb_matrix_set_color(32, r, g, b);
+    rgb_matrix_set_color(33, r, g, b);
+    rgb_matrix_set_color(35, r, g, b);
+
+    // right thumb
+    rgb_matrix_set_color(68, r, g, b);
+    rgb_matrix_set_color(69, r, g, b);
+    rgb_matrix_set_color(71, r, g, b);
+}
+
+void set_all_keys(int r, int g, int b) {
+    set_left_hand_color(r, g, b);
+    set_right_hand_color(r, g, b);
+    set_thumb_keys(r, g, b);
+}
+
+void set_top_keys(int r, int g, int b) {
+
+    rgb_matrix_set_color(6, r, g, b);
+    rgb_matrix_set_color(11, r, g, b);
+    rgb_matrix_set_color(16, r, g, b);
+    rgb_matrix_set_color(21, r, g, b);
+    rgb_matrix_set_color(26, r, g, b);
+    rgb_matrix_set_color(42, r, g, b);
+    rgb_matrix_set_color(47, r, g, b);
+    rgb_matrix_set_color(52, r, g, b);
+    rgb_matrix_set_color(57, r, g, b);
+    rgb_matrix_set_color(62, r, g, b);
+}
+
 bool rgb_matrix_indicators_kb(void) {
     switch (get_highest_layer(layer_state)) {
         case 0:
+            rgb_matrix_set_color_all(0,0,0);
+            set_all_keys(255, 255, 255);
             break;
         case 1:
             rgb_matrix_set_color_all(0,0,0);
-            rgb_matrix_set_color(6, 204, 255, 204);
+            set_all_keys(255, 255, 255);
+            set_right_hand_color(75, 255, 255);
             break;
         case 2:
             rgb_matrix_set_color_all(0,0,0);
-            rgb_matrix_set_color(6, 75, 255, 75);
-            rgb_matrix_set_color(7, 75, 255, 75);
+            set_all_keys(255, 255, 255);
+            set_left_hand_color(75, 255, 75);
+            break;
+        case 3:
+            rgb_matrix_set_color_all(0,0,0);
+            set_all_keys(255, 255, 255);
+            set_functions_keys(255, 0, 255);
             break;
         default:
             break;
+    }
+    if (host_keyboard_led_state().caps_lock) {
+        set_top_keys(255, 0, 0);
     }
     return true;
 }
