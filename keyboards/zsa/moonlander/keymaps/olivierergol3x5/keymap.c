@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT(
     XXXXXXX,      XXXXXXX,        XXXXXXX,        XXXXXXX,         XXXXXXX,        XXXXXXX,        XXXXXXX,                                        XXXXXXX,        XXXXXXX,         XXXXXXX,         XXXXXXX,       XXXXXXX,        XXXXXXX,       XXXXXXX,
     XXXXXXX,      EG_Q,           EG_C,           EG_O,            EG_P,           EG_W,           XXXXXXX,                                        XXXXXXX,         EG_J,           EG_M,           EG_D,           EG_DK,          EG_Y,          XXXXXXX,
-    XXXXXXX,      EG_A,           LGUI_T(EG_S),   LCTL_T(EG_E),    LALT_T(EG_N),   EG_F,           XXXXXXX,                                        XXXXXXX,         EG_L,           LALT_T(EG_R),   LCTL_T(EG_T),   LGUI_T(EG_I),   EG_U,          XXXXXXX,
+    XXXXXXX,      EG_A,           LGUI_T(EG_S),   LCTL_T(EG_E),    LALT_T(EG_N),   EG_F,           XXXXXXX,                                        XXXXXXX,         EG_L,           LALT_T(EG_R),   RCTL_T(EG_T),   LGUI_T(EG_I),   EG_U,          XXXXXXX,
     XXXXXXX,      EG_Z,           EG_X,           EG_QUES,         EG_V,           EG_B,                                                                            EG_DOT,         EG_H,           EG_G,           EG_COMM,        LT(3,EG_K),    XXXXXXX,
     XXXXXXX,      XXXXXXX,        XXXXXXX,        XXXXXXX,         XXXXXXX,        TT(1),                                                                           TT(2),          XXXXXXX,        XXXXXXX,        XXXXXXX,        XXXXXXX,       XXXXXXX,
                                                   LSFT_T(KC_ESC),  KC_BSPC,        XXXXXXX,                                                                         XXXXXXX,        ALGR_T(KC_ENTER),KC_SPACE
@@ -92,28 +92,53 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
     'L', 'L',        'L',        'L',        'L',         '*',                                                                '*',        'R',        'R',        'R',        'R',        'R',
                                  '*',        '*',         '*',                                                                '*',        '*',        '*'
     );
-// disable some key
-bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
-                      uint16_t other_keycode, keyrecord_t* other_record) {
-    // Exceptionally allow some one-handed chords for hotkeys.
-    switch (tap_hold_keycode) {
-        case LCTL_T(EG_E):
-            // do not trigghold when roll typing
-            if (other_keycode == LALT_T(EG_N)) {
+
+
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+
+    // avoid mod when using EG_E followed by EG_N
+    case LALT_T(EG_N):
+        /*
+        Detect the tap.
+        We're only interested in overriding the tap behavior
+        in a certain cicumstance. The hold behavior can stay the same.
+        */
+        if (record->event.pressed && record->tap.count > 0) {
+            // Detect right Shift
+            if (get_mods() & MOD_BIT(KC_LCTL)) {
+                // temporarily disable right Shift
+                // so that we can send KC_E and KC_N
+                // without Shift on.
+                unregister_mods(MOD_BIT(KC_LCTL));
+                tap_code(EG_E);
+                tap_code(EG_N);
+                // restore the mod state
+                add_mods(MOD_BIT(KC_LCTL));
+                // to prevent QMK from processing RCTL_T(KC_N) as usual in our special case
                 return false;
-                break;
-            } else if (other_keycode == EG_C || other_keycode == EG_V) {
-                return true;
-                break;
             }
-        // allow thumb keys
-        case LSFT(KC_ESC):
-        case ALGR_T(KC_ENTER):
-            return true;
-            break;
+        }
+         /*else process RCTL_T(KC_N) as usual.*/
+        return true;
+
     }
-    // Otherwise defer to the opposite hands rule.
-    return get_chordal_hold_default(tap_hold_record, other_record);
+    return true;
+};
+
+
+
+// reduce tapping term for thumbs key
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SFT_T(KC_ESC):
+            return TAPPING_TERM - 50;
+        case ALGR_T(KC_ENTER):
+            return TAPPING_TERM - 50;
+        default:
+            return TAPPING_TERM;
+    }
 }
 
 // remove insecable space

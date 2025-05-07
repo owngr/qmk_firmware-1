@@ -19,7 +19,8 @@
 #pragma once
 
 #define ORYX_CONFIGURATOR
-#define TAPPING_TERM 300
+#define TAPPING_TERM 250
+#define TAPPING_TERM_PER_KEY
 // allow to obtain the hold before the tapping term
 #define PERMISSIVE_HOLD
 #define CHORDAL_HOLD
