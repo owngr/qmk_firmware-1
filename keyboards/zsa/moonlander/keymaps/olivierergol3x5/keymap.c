@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     XXXXXXX,      XXXXXXX,        XXXXXXX,        XXXXXXX,         XXXXXXX,        XXXXXXX,        XXXXXXX,                                        XXXXXXX,        XXXXXXX,         XXXXXXX,         XXXXXXX,       XXXXXXX,        XXXXXXX,       XXXXXXX,
     XXXXXXX,      EG_Q,           EG_C,           EG_O,            EG_P,           EG_W,           XXXXXXX,                                        XXXXXXX,         EG_J,           EG_M,           EG_D,           EG_DK,          EG_Y,          XXXXXXX,
     XXXXXXX,      EG_A,           LGUI_T(EG_S),   LCTL_T(EG_E),    LALT_T(EG_N),   EG_F,           XXXXXXX,                                        XXXXXXX,         EG_L,           LALT_T(EG_R),   RCTL_T(EG_T),   LGUI_T(EG_I),   EG_U,          XXXXXXX,
-    XXXXXXX,      EG_Z,           EG_X,           EG_QUES,         EG_V,           EG_B,                                                                            EG_DOT,         EG_H,           EG_G,           EG_COMM,        LT(3,EG_K),    XXXXXXX,
+    XXXXXXX,      LT(4,EG_Z),     EG_X,           EG_QUES,         EG_V,           EG_B,                                                                            EG_DOT,         EG_H,           EG_G,           EG_COMM,        LT(3,EG_K),    XXXXXXX,
     XXXXXXX,      XXXXXXX,        XXXXXXX,        XXXXXXX,         XXXXXXX,        TT(1),                                                                           TT(2),          XXXXXXX,        XXXXXXX,        XXXXXXX,        XXXXXXX,       XXXXXXX,
                                                   LSFT_T(KC_ESC),  KC_BSPC,        XXXXXXX,                                                                         XXXXXXX,        ALGR_T(KC_ENTER),KC_SPACE
   ),
@@ -79,6 +79,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,      KC_F9,          KC_F10,         KC_F11,         KC_F12,          _______,                                                                        _______,        _______,        _______,        _______,        _______,        _______,
     _______,      _______,        _______,        _______,        _______,         _______,                                                                        _______,        _______,        _______,        _______,        _______,        _______,
                                                   _______,        _______,         _______,                                                                        _______,        _______,        _______
+  ),
+  [4] = LAYOUT(
+    _______,      _______,        _______,        _______,        _______,         _______,        _______,                                        _______,        _______,        _______,        _______,        _______,        _______,        _______,
+    _______,      _______,        _______,        KC_UP,          _______,         _______,        _______,                                        _______,        _______,        _______,        _______,        _______,        _______,        _______,
+    _______,      _______,        KC_LEFT,        KC_DOWN,        KC_RIGHT,        _______,        _______,                                        _______,        _______,        _______,        _______,        KC_LGUI,        _______,        _______,
+    _______,      _______,        _______,        _______,        _______,          _______,                                                                       _______,        _______,        _______,        _______,        _______,        _______,
+    _______,      _______,        _______,        _______,        _______,         _______,                                                                        _______,        _______,        _______,        _______,        _______,        _______,
+                                                  KC_ESC,         _______,         _______,                                                                        _______,        KC_ENTER,        _______
   ),
 };
 
@@ -297,6 +305,10 @@ bool rgb_matrix_indicators_kb(void) {
             rgb_matrix_set_color_all(0,0,0);
             set_all_keys(255, 255, 255);
             set_functions_keys(255, 0, 255);
+            break;
+        case 4:
+            rgb_matrix_set_color_all(0,0,0);
+            set_all_keys(255, 255, 75);
             break;
         default:
             break;
