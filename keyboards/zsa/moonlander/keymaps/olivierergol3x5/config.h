@@ -24,4 +24,6 @@
 // allow to obtain the hold before the tapping term
 #define PERMISSIVE_HOLD
 #define CHORDAL_HOLD
+// Should be about half of TAPPING_TERM
+#define FLOW_TAP_TERM 150
 
